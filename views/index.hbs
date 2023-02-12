@@ -1,0 +1,101 @@
+<div class="container justify-content-center ms-5 mt-5">
+  <div class="form-group ms-5">
+    <form action="/">
+      <div class="ms-5">
+        <div class="ms-5 d-flex justify-content-start">
+          <div class="col-1 me-5">
+            <select name="filter" id="filter"
+              style="width:180px; height:50px; border-radius:6%; border-color:#D9D9D9; padding-left: 10px;">
+              <option value="0" {{#if filter}} selected {{/if}}>請選擇類別</option>
+              <option value="1" {{#if filter}} selected {{/if}}>家居物業</option>
+              <option value="2" {{#if filter}} selected {{/if}}>交通出行</option>
+              <option value="3" {{#if filter}} selected {{/if}}>休閒娛樂</option>
+              <option value="4" {{#if filter}} selected {{/if}}>餐飲食品</option>
+              <option value="5" {{#if filter}} selected {{/if}}>其他</option>
+            </select>
+          </div>
+          <div class="col-1 ms-4">
+            <button type="submit" class="btn btn-outline-secondary">篩選</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <form action="/search">
+      <div class="input-group row align-items-center justify-content-end mt-5">
+        <div class="col-3">
+          <input type="text" name="keywords" class="form-control" placeholder="搜尋" aria-label="Restaurant Name..."
+            value="{{keywords}}" aria-describedby="search-button">
+        </div>
+        <div class="col-1">
+          <div class="input-group-append">
+            <button class="btn btn-major " type="submit" id="search-button"><i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+
+    </form>
+  </div>
+
+
+  <div>
+    <div class="row totalAmount mt-5">
+      <h3 class="col-4 fw-bold">Total Amount：</h4>
+        <h1 class="col-6 fw-bold" style="color:#b7d6e5;">{{totalAmount}}</h1>
+    </div>
+    <div class="d-flex justify-content-end">
+      <a class="btn btn-outline-primary" href="./expenses/new" role="button">Add Expense</a>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-3 mt-5">
+      <h5 class="fw-bold">日期</h5>
+    </div>
+    <div class="col-2 mt-5">
+      <h5 class="fw-bold">項目</h5>
+    </div>
+    <div class="col-5 mt-5 text-center">
+      <h5 class="fw-bold">金額</h5>
+    </div>
+    <hr>
+
+    {{#each expenses}}
+    <div class="col-3">
+      <p class="fs-5">{{this.date}}</p>
+    </div>
+
+    <div class="d-flex col-3 justify-content-evenly">
+      <div class="col-2 mt-2">
+        {{#ifEquals '1' this.category}}<i class="fa-solid fa-house"></i>{{/ifEquals}}
+        {{#ifEquals '2' this.category}}<i class="fa-solid fa-van-shuttle"></i>{{/ifEquals}}
+        {{#ifEquals '3' this.category}}<i class="fa-solid fa-face-grin-beam"></i>{{/ifEquals}}
+        {{#ifEquals '4' this.category}}<i class="fa-solid fa-utensils"></i>{{/ifEquals}}
+        {{#ifEquals '5' this.category}}<i class="fa-solid fa-pen"></i>{{/ifEquals}}
+      </div>
+      <div>
+        <p class="fs-5">{{this.name}}</p>
+      </div>
+    </div>
+
+    <div class="col-3 text-center">
+      <p class="fs-5" id="amount">{{this.amount}}</p>
+    </div>
+    <div class="col-2">
+      <a class="btn btn-outline-secondary btn-sm me-3" href="/expenses/{{this._id}}/edit" role="button">Edit</a>
+      <form action="/expenses/{{this._id}}?_method=DELETE" method="POST" style="display: inline;">
+        <button class="btn btn-outline-primary btn-sm" type="submit">Delete</button>
+      </form>
+    </div>
+
+    {{/each}}
+    <hr class="mt-3">
+
+  </div>
+</div>
